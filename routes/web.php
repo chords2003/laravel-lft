@@ -21,14 +21,14 @@ use App\Http\Controllers\PostCommentController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
@@ -36,6 +36,9 @@ Route::get('/', function () {
 
 // route::get('/post', [PostController::class, 'index']);
 
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/index' ,[PostController::class, 'index'])->middleware(['auth', 'verified'])->name('index');

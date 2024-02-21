@@ -12,10 +12,25 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     return Inertia::render('Index');
+    // }
+
     public function index()
-    {
-        return Inertia::render('Index');
-    }
+{
+    $user = auth()->user();
+    $totalLikes = $user->likes->count();
+
+    // Eager load the user relationship with the posts
+    $posts = Post::with(['user', 'comments', 'likes'])->orderBy('updated_at', 'desc')->paginate(10);
+
+    return view('index', [
+        'posts' => $posts,
+        'totalLikes' => $totalLikes,
+        'users' => $user,
+    ]);
+}
 
     /**
      * Show the form for creating a new resource.
