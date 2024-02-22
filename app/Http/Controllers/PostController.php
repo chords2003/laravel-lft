@@ -20,7 +20,7 @@ class PostController extends Controller
     public function index()
 {
     $user = auth()->user();
-    $totalLikes = $user->likes->count();
+    $totalLikes = $user->likes;
 
     // Eager load the user relationship with the posts
     $posts = Post::with(['user', 'comments', 'likes'])->orderBy('updated_at', 'desc')->paginate(10);

@@ -9,6 +9,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostCommentController;
+use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,11 +72,21 @@ Route::middleware('auth')->group(function () {
     //create a route to the Auth user profile
     Route::post('/posts/{post:id}/likes', [PostController::class, 'like'])->middleware(['auth', 'verified'])->name('like');
     Route::delete('/posts/{post:id}/likes', [PostController::class, 'unlike'])->middleware(['auth', 'verified'])->name('unlike');
-});
-Route::middleware('auth')->group(function () {
+
+
+    //profile routes
+
+    Route::get('/profile/{user}', [UserProfileController::class, 'show'])->name('profile');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    //create a logout route for a user
+    Route::post('/logout', [ProfileController::class, 'destroy'])->name('logout');
 });
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__.'/auth.php';
